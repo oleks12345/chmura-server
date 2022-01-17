@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cloud-server
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: cloud-server
+  name: cloud-server-deploy
+  labels:
+    name: cloud-server
+    app: cloud-server
+  annotations:
+spec:
+  selector:
+    matchLabels:
+      app: cloud-server
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: cloud-server
+        name: cloud-server
+    spec:
+      containers:
+      - name: cloud-server
+        image: ghcr.io/jjzajac/chmura-server:TAG
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: cloud-server
+  name: cloud-server-lb
+spec:
+  selector:
+    app: cloud-server
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
