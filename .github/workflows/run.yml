@@ -13,8 +13,10 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: cluster-1    
   GKE_ZONE: europe-north1-a  
-  DEPLOYMENT_NAME: cloud-server-deploy 
-
+  DEPLOYMENT_NAME: cloud-server-deploy
+  NAMESPACE: cloud-server
+  REPO: ghcr.io
+  IMAGE: jjzajac/chmura-server
 
 jobs:
   test:
@@ -91,6 +93,6 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
-        ./kustomize edit set image ghcr.io/jjzajac/chmura-server:TAG=ghcr.io/jjzajac/chmura-server:${{ github.sha }}
+        ./kustomize edit set image ${{ env.REPO }}/${{ env.IMAGE }}:TAG=${{ env.REPO }}/${{ env.IMAGE }}:${{ github.sha }}
         ./kustomize build . | kubectl apply -f -
-        kubectl rollout status deployment/ ${{ env.DEPLOYMENT_NAME }}
+        kubectl rollout status deployment/${{ env.DEPLOYMENT_NAME }} --namespace=${{ env.DEPLOYMENT_NAME }}
