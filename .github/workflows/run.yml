@@ -93,5 +93,4 @@ jobs:
       run: |-
         ./kustomize edit set image ghcr.io/jjzajac/chmura-server:TAG=ghcr.io/jjzajac/chmura-server:${{ github.sha }}
         ./kustomize build . | kubectl apply -f -
-        kubectl rollout status deployment/ ${{ env.DEPLOYMENT_NAME }}
-        kubectl get services -o wide
+        kubectl rollout status deployment/${{ env.DEPLOYMENT_NAME }}
