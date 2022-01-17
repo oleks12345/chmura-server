@@ -53,10 +53,15 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           tags:  ghcr.io/jjzajac/chmura-server:$GITHUB_SHA
+          push: true
+      - name: Build image and push to GitHub Container Registry
+        uses: docker/build-push-action@v2
+        with:
           tags:  ghcr.io/jjzajac/chmura-server:latest
           push: true
 
   deploy:
+    needs: [build-and-push]
     name: Setup, Deploy
     runs-on: ubuntu-latest
 
