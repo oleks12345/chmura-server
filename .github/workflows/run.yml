@@ -16,7 +16,7 @@ env:
   DEPLOYMENT_NAME: cloud-server-deploy
   NAMESPACE: cloud-server
   REPO: ghcr.io
-  IMAGE: jjzajac/chmura-server
+  IMAGE: oleks12345/chmura-server
 
 jobs:
   test:
