@@ -95,4 +95,4 @@ jobs:
       run: |-
         ./kustomize edit set image ${{ env.REPO }}/${{ env.IMAGE }}:TAG=${{ env.REPO }}/${{ env.IMAGE }}:${{ github.sha }}
         ./kustomize build . | kubectl apply -f -
-        kubectl rollout status deployment/${{ env.DEPLOYMENT_NAME }} --namespace=${{ env.DEPLOYMENT_NAME }}
+        kubectl rollout status deployment/${{ env.DEPLOYMENT_NAME }} --namespace=${{ env.NAMESPACE }}
