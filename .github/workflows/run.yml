@@ -12,6 +12,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: cluster-1
+  GKE_ZONE: europe-central2-a
   DEPLOYMENT_NAME: cloud-server-deploy
   NAMESPACE: cloud-server
   REPO: ghcr.io
@@ -80,6 +81,7 @@ jobs:
       - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
         with:
           cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
           credentials: ${{ secrets.GKE_SA_KEY }}
 
       # Set up kustomize
