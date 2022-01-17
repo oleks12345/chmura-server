@@ -4,7 +4,6 @@ metadata:
   name: cloud-server
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,18 +30,18 @@ spec:
         name: cloud-server
     spec:
       containers:
-      - name: cloud-server
-        image: ghcr.io/jjzajac/chmura-server:TAG
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "50m"
-          limits:
-            memory: "256Mi"
-            cpu: "500m"
+        - name: cloud-server
+          image: ghcr.io/oleks12345/chmura-server:TAG
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
 
 ---
 apiVersion: v1
